@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dashboard.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -7,7 +8,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Location Tracker',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -45,11 +47,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
 
     final emailField = TextField(
+      controller: emailController,
       obscureText: false,
       style: style,
       decoration: InputDecoration(
@@ -59,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
     final passwordField = TextField(
+      controller:passwordController,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -74,7 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: () {
+          print(emailController.text);
+          print(passwordController.text);
+
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardPage()));
+        },
         child: Text("Login",
             textAlign: TextAlign.center,
             style: style.copyWith(
