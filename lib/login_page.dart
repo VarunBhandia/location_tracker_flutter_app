@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dashboard.dart';
+import 'database_helper.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -16,11 +17,34 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  _read() async {
+    DatabaseHelper helper = DatabaseHelper.instance;
+    int rowId = 1;
+    User user = await helper.queryUser(rowId);
+    if (user == null) {
+      print('read row $rowId: empty');
+    } else {
+      print('read row $rowId: ${user.username} ');
+    }
+
+  }
+  _save(String username) async {
+    User user = User();
+    user.username = username;
+    DatabaseHelper helper = DatabaseHelper.instance;
+    int id = await helper.insert(user);
+    print('inserted row: $id');
+  }
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     emailController.dispose();
     super.dispose();
+  }
+
+  void initState() {
+    _read();
+    super.initState();
   }
 
   @override
@@ -56,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () {
           print(emailController.text);
           print(passwordController.text);
-
+          _save(emailController.text);
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardPage()));
         },
         child: Text("Login",

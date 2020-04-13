@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location_tracker/login_page.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class LocationPermission extends StatefulWidget {
   @override
