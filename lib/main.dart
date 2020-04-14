@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'location_permission.dart';
+import 'package:location_tracker/login_page.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: LocationPermission(),
+      home: LoginPage(),
     );
   }
 }

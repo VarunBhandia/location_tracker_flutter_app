@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'dashboard.dart';
 import 'database_helper.dart';
 
@@ -16,6 +17,24 @@ class _LoginPageState extends State<LoginPage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  Position _currentPosition;
+
+  _getCurrentLocation() {
+    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+
+      setState(() {
+        _currentPosition = position;
+      });
+      print("LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
+
+    }).catchError((e) {
+      print(e);
+    });
+  }
 
   _read() async {
     DatabaseHelper helper = DatabaseHelper.instance;
@@ -25,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
       print('read row $rowId: empty');
     } else {
       print('read row $rowId: ${user.username} ');
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardPage()));
     }
 
   }
@@ -43,7 +63,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void initState() {
+    _getCurrentLocation();
     _read();
+
     super.initState();
   }
 
@@ -78,6 +100,7 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
+          _getCurrentLocation();
           print(emailController.text);
           print(passwordController.text);
           _save(emailController.text);
