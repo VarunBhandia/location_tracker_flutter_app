@@ -40,11 +40,11 @@ class _LoginPageState extends State<LoginPage> {
     DatabaseHelper helper = DatabaseHelper.instance;
     int rowId = 1;
     User user = await helper.queryUser(rowId);
-    if (user == null) {
-      print('read row $rowId: empty');
-    } else {
+    if (user != null) {
       print('read row $rowId: ${user.username} ');
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardPage()));
+    } else {
+      print('read row $rowId: empty');
     }
 
   }
