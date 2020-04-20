@@ -30,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         _currentPosition = position;
       });
       print("LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
+      _saveLocation(_currentPosition.latitude,_currentPosition.longitude);
 
     }).catchError((e) {
       print(e);
@@ -55,6 +56,16 @@ class _LoginPageState extends State<LoginPage> {
     int id = await helper.insert(user);
     print('inserted row: $id');
   }
+
+  _saveLocation(double latitude, double longitude) async {
+    Location location = Location();
+    location.latitude = latitude;
+    location.longitude = longitude;
+    DatabaseHelper helper = DatabaseHelper.instance;
+    int id = await helper.insertLocation(location);
+    print('inserted row: $id');
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.

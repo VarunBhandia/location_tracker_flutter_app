@@ -8,6 +8,11 @@ final String tableUsers = 'users';
 final String columnId = '_id';
 final String columnUser = 'user';
 
+final String tableLocation = 'location';
+final String columnLocationId = '_id';
+final String columnLatitude = 'latitude';
+final String columnLongitude = 'longitude';
+
 // data model class
 class User {
 
@@ -34,6 +39,33 @@ class User {
   }
 }
 
+class Location {
+
+  int id;
+  double latitude;
+  double longitude;
+
+  Location();
+
+  // convenience constructor to create a Location object
+  Location.fromLocationMap(Map<String, dynamic> map) {
+    id = map[columnId];
+    latitude = map[columnLatitude];
+    longitude = map[columnLongitude];
+  }
+
+  // convenience method to create a Map from this Location object
+  Map<String, dynamic> toLocationMap() {
+    var map = <String, dynamic>{
+      columnLatitude: latitude,
+      columnLongitude: longitude,
+    };
+    if (id != null) {
+      map[columnLocationId] = id;
+    }
+    return map;
+  }
+}
 // singleton class to manage the database
 class DatabaseHelper {
 
@@ -71,6 +103,14 @@ class DatabaseHelper {
           CREATE TABLE $tableUsers (
             $columnId INTEGER PRIMARY KEY,
             $columnUser TEXT NOT NULL
+          )
+          ''');
+    await db.execute('''
+          CREATE TABLE $tableLocation (
+            $columnLocationId INTEGER PRIMARY KEY,
+            $columnLatitude DOUBLE NOT NULL,
+            $columnLongitude DOUBLE NOT NULL
+            
           )
           ''');
   }
@@ -115,6 +155,46 @@ class DatabaseHelper {
     Database db = await database;
     return await db.update(tableUsers, user.toMap(),
         where: '$columnId = ?', whereArgs: [user.id]);
+  }
+
+  Future<int> insertLocation(Location location) async {
+    Database db = await database;
+    int id = await db.insert(tableLocation, location.toLocationMap());
+    return id;
+  }
+
+  Future<Location> queryLocation(int id) async {
+    Database db = await database;
+    List<Map> maps = await db.query(tableLocation,
+        columns: [columnLocationId, columnLatitude,columnLongitude],
+        where: '$columnLocationId = ?',
+        whereArgs: [id]);
+    if (maps.length > 0) {
+      return Location.fromLocationMap(maps.first);
+    }
+    return null;
+  }
+
+  Future<List<Location>> queryAllLocations() async {
+    Database db = await database;
+    List<Map> maps = await db.query(tableLocation);
+    if (maps.length > 0) {
+      List<Location> locations = [];
+      maps.forEach((map) => locations.add(Location.fromLocationMap(map)));
+      return locations;
+    }
+    return null;
+  }
+
+  Future<int> deleteLocation(int id) async {
+    Database db = await database;
+    return await db.delete(tableLocation, where: '$columnLocationId = ?', whereArgs: [id]);
+  }
+
+  Future<int> updateLocation(Location location) async {
+    Database db = await database;
+    return await db.update(tableLocation, location.toLocationMap(),
+        where: '$columnLocationId = ?', whereArgs: [location.id]);
   }
 
 }
