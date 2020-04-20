@@ -19,13 +19,14 @@ class _DashboardPage extends State<DashboardPage> {
   static const ms = const Duration(milliseconds: 1);
   double latitude;
   double longitude;
+  double distanceInMeters;
   bool showAlert = false;
   _getCurrentLocation() {
     final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
 
     geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) async {
 
       setState(() {
         _currentPosition = position;
@@ -33,12 +34,17 @@ class _DashboardPage extends State<DashboardPage> {
 
       print("LAT final: ${latitude}, LNG final: ${longitude}");
       print("LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
-      double dist = getDistanceFromLatLonInKm(_currentPosition.latitude ,latitude,_currentPosition.longitude ,longitude);
-      print(dist);
+      distanceInMeters = await Geolocator().distanceBetween(latitude, longitude, _currentPosition.latitude, _currentPosition.longitude);
+//      double dist = getDistanceFromLatLonInKm(_currentPosition.latitude ,latitude,_currentPosition.longitude ,longitude);
+      print(distanceInMeters);
 
-      if(dist > 6000){
+      if(distanceInMeters > 100){
         setState(() {
           showAlert = true;
+        });
+      } else {
+        setState(() {
+          showAlert = false;
         });
       }
     }).catchError((e) {
