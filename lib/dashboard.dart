@@ -42,6 +42,7 @@ class _DashboardPage extends State<DashboardPage> {
         setState(() {
           showAlert = true;
         });
+        _showNotificationWithDefaultSound();
       } else {
         setState(() {
           showAlert = false;
@@ -98,10 +99,6 @@ class _DashboardPage extends State<DashboardPage> {
                 child: Text('Go back in your circle please !!!',style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 30),),
               )
             ),
-            new RaisedButton(
-              onPressed: _showNotificationWithDefaultSound,
-              child: new Text('Show Notification Without Sound'),
-            ),
           ],
         )
 
@@ -129,8 +126,8 @@ class _DashboardPage extends State<DashboardPage> {
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
       0,
-      'New Post',
-      'How to Show Notification in Flutter',
+      'Qurantine Break',
+      'Go back in your circle please !!!',
       platformChannelSpecifics,
       payload: 'Default_Sound',
     );
