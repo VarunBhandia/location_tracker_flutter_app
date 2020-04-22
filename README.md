@@ -1,16 +1,47 @@
-# location_tracker
+# Laxman Rekha | Razorpod 
 
-A application to access location of a individual and then send the notifications accordingly.
+[![N|Solid](https://www.razorpod.in/wp-content/uploads/2019/01/favicon-rzr.png)](https://www.razorpod.in/wp-content/uploads/2019/01/favicon-rzr.png)
 
-## Getting Started
+Laxman Rekha is a cross platform Flutter App compatible for latest Android versions.
+  
+# Features!
 
-This project is a starting point for a Flutter application.
+  - Tracks your location and sends the notification on both Admin App and the user app if the user breaks his/her Quarantine.
 
-A few resources to get you started if this is your first Flutter project:
+> *Quarantine is a state, period, or place of isolation in which people or animals that have arrived from elsewhere or been exposed to infectious or contagious disease are placed.*
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+# Tech
+
+LR uses a number of open source projects to work properly:
+
+* [Flutter](https://flutter.dev/) - Flutter is Google's UI toolkit for crafting beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.
+* Android Studio](https://developer.android.com/studio) - Edit, Analyze, Emulate & Preview your Android app before release
+
+<!-- And of course Dillinger itself is open source with a [public repository][dill]
+ on GitHub. -->
+
+# Installation
+
+LR requires [flutter](https://flutter.dev/) 1.12+ to run.
+
+Install the dependencies and devDependencies and start the server.
+
+```sh
+$ git clone https://github.com/VarunBhandia/location_tracker_flutter_app.git
+$ cd location_tracker_flutter_app
+$ flutter packages get
+$ flutter run
+```
+
+# Todos
+
+ - Get location in Background
+ - Add Night Mode
+ 
+
+
+
+
+
