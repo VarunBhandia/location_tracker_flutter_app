@@ -16,8 +16,8 @@ Laxman Rekha is a cross platform Flutter App compatible for latest Android versi
 
 LR uses a number of open source projects to work properly:
 
-* [Flutter](https://flutter.dev/) - Flutter is Google's UI toolkit for crafting beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.
-* Android Studio](https://developer.android.com/studio) - Edit, Analyze, Emulate & Preview your Android app before release
+* [Flutter](https://flutter.dev/) - Flutter is Google's UI toolkit for mobile applicationsfrom a single codebase.
+* [Android Studio](https://developer.android.com/studio) - Edit, Analyze, Emulate & Preview your Android app before release
 
 <!-- And of course Dillinger itself is open source with a [public repository][dill]
  on GitHub. -->
